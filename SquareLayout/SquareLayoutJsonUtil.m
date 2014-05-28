@@ -35,7 +35,11 @@ static NSString * const SubviewsKey = @"subviews";
     NSDictionary *d = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parsingError];
     // Get root-view dictionary
     NSDictionary *squareDictionary = [d objectForKey:RootKey];
-    return [self buildSquare:squareDictionary root:YES];
+    if (squareDictionary) {
+        return [self buildSquare:squareDictionary root:YES];
+    } else {
+        return nil;
+    }
 }
 
 + (SquareLayoutSquare *)buildSquare:(NSDictionary *)jsonDictionary root:(BOOL)itemRoot

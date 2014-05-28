@@ -49,7 +49,9 @@ static NSString * const SubviewLayoutVertical = @"vertical";
         dispatch_sync(concurrentQueue, ^{
             NSString *filePath = [[NSBundle mainBundle] pathForResource:JsonFileName ofType:JsonFileType];
             NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
-            rootSquare = [SquareLayoutJsonUtil getParentSquare:jsonData];
+            if (jsonData) {
+                rootSquare = [SquareLayoutJsonUtil getParentSquare:jsonData];
+            }
         });
         
         // Perform Reload View
