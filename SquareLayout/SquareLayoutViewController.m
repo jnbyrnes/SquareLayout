@@ -63,6 +63,7 @@ static NSString * const SubviewLayoutVertical = @"vertical";
                 if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
                     // adjust for status bar on ios7
                     rootFrame.origin.y = rootFrame.origin.y + 20;
+                    rootFrame.size.height = rootFrame.size.height - 20;
                 }
                 [self buildViewHierarchy:rootSquare view:[[UIApplication sharedApplication] keyWindow] frame:rootFrame];
             }
