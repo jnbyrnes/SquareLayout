@@ -10,9 +10,9 @@
 
 @implementation SquareLayoutSquare
 
-@synthesize padding, spacing, borderThickness, borderColor, backgroundColor, subviewLayout, subviews;
+@synthesize padding, spacing, borderThickness, root, borderColor, backgroundColor, subviewLayout, subviews;
 
-- (id)initWithPadding:(int)itemPadding spacing:(int)itemSpacing borderThickness:(float)itemBorderThickness borderColor:(UIColor *)itemBorderColor backgroundColor:(UIColor *)itemBackgroundColor subviewLayout:(NSString *)itemSubviewLayout subviews:(NSArray *)itemSubviews
+- (id)initWithPadding:(int)itemPadding spacing:(int)itemSpacing borderThickness:(float)itemBorderThickness root:(BOOL)itemRoot borderColor:(UIColor *)itemBorderColor backgroundColor:(UIColor *)itemBackgroundColor subviewLayout:(NSString *)itemSubviewLayout subviews:(NSArray *)itemSubviews
 {
     self =[super init];
     
@@ -20,6 +20,7 @@
         padding = itemPadding;
         spacing = itemSpacing;
         borderThickness = itemBorderThickness;
+        root = itemRoot;
         borderColor = itemBorderColor;
         backgroundColor = itemBackgroundColor;
         subviewLayout = itemSubviewLayout;

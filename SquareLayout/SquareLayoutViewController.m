@@ -59,7 +59,12 @@ static NSString * const SubviewLayoutVertical = @"vertical";
                 [av show];
             } else {
                 // update the view
-                [self buildViewHierarchy:rootSquare view:[[UIApplication sharedApplication] keyWindow] frame:[[[UIApplication sharedApplication] keyWindow] bounds]];
+                CGRect rootFrame = [[[UIApplication sharedApplication] keyWindow] bounds];
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+                    // adjust for status bar on ios7
+                    rootFrame.origin.y = rootFrame.origin.y + 20;
+                }
+                [self buildViewHierarchy:rootSquare view:[[UIApplication sharedApplication] keyWindow] frame:rootFrame];
             }
         });
     });
@@ -108,7 +113,15 @@ static NSString * const SubviewLayoutVertical = @"vertical";
                     }
                     subviewHeight = (totalSubviewsHeight/numSubviews);
                 }
-                [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewX, subviewY, subviewWidth, subviewHeight)];
+                // Check for orientation
+                UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+                if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+                    NSLog(@"------------Orientation is in Portrait");
+                    [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewX, subviewY, subviewWidth, subviewHeight)];
+                } else {
+                    NSLog(@"------------Orientation is in Landscape");
+                    [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewY, subviewX, subviewHeight, subviewWidth)];
+                }
             }
         }
         
@@ -123,6 +136,31 @@ static NSString * const SubviewLayoutVertical = @"vertical";
     [[view layer] setBorderColor:[[itemSquare borderColor] CGColor]];
     [[view layer] setBorderWidth:[itemSquare borderThickness]];
     return view;
+}
+
+// Handle Rotation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"Did Rotate From Interface Orientation");
+    // Perform Reload View
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        if (!rootSquare) {
+            NSLog(@"Error");
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Invalid Json file, please update %@.%@", JsonFileName, JsonFileType] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+            [av show];
+        } else {
+            NSLog(@"Success");
+            // remove all subviews
+            [[[[UIApplication sharedApplication] keyWindow] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            // update the view
+            [self buildViewHierarchy:rootSquare view:[[UIApplication sharedApplication] keyWindow] frame:[[[UIApplication sharedApplication] keyWindow] bounds]];
+        }
+    });
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
 }
 
 @end

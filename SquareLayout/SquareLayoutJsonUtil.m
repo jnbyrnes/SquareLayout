@@ -35,10 +35,10 @@ static NSString * const SubviewsKey = @"subviews";
     NSDictionary *d = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parsingError];
     // Get root-view dictionary
     NSDictionary *squareDictionary = [d objectForKey:RootKey];
-    return [self buildSquare:squareDictionary];
+    return [self buildSquare:squareDictionary root:YES];
 }
 
-+ (SquareLayoutSquare *)buildSquare:(NSDictionary *)jsonDictionary
++ (SquareLayoutSquare *)buildSquare:(NSDictionary *)jsonDictionary root:(BOOL)itemRoot
 {
     NSLog(@"Build Square is called");
     int padding = PaddingDefault;
@@ -63,11 +63,11 @@ static NSString * const SubviewsKey = @"subviews";
     NSMutableArray *childSquares = [[NSMutableArray alloc] init];
     if (subviewArray && [subviewArray count]>0) {
         for (id childJsonDictionary in subviewArray) {
-            [childSquares addObject:[self buildSquare:childJsonDictionary]];
+            [childSquares addObject:[self buildSquare:childJsonDictionary root:NO]];
     
         }
     }
-    SquareLayoutSquare *square = [[SquareLayoutSquare alloc] initWithPadding:padding spacing:spacing borderThickness:borderThickness borderColor:borderColor backgroundColor:backgroundColor subviewLayout:subviewLayout subviews:childSquares];
+    SquareLayoutSquare *square = [[SquareLayoutSquare alloc] initWithPadding:padding spacing:spacing borderThickness:borderThickness root:itemRoot borderColor:borderColor backgroundColor:backgroundColor subviewLayout:subviewLayout subviews:childSquares];
     return square;
 }
 
