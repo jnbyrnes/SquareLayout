@@ -23,7 +23,7 @@
                      "green": 1.0,
                      "blue": 0.0
                      },
-                     "subview-layout": "vertical",
+                     "subview-layout": "horizontal",
                      "subviews": [
                                   {
                                   "border-thickness": 1.0,
@@ -59,7 +59,7 @@
                      "green": 0.0,
                      "blue": 1.0
                      },
-                     "subview-layout": "vertical",
+                     "subview-layout": "horizontal",
                      "subviews": [
                                   {
                                   "background-color": {

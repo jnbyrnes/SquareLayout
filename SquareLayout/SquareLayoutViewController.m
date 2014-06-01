@@ -126,7 +126,7 @@ static NSString * const SubviewLayoutVertical = @"vertical";
                     if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
                         subviewHeight = totalSubviewsAbstractHeight;
                         subviewWidth = (totalSubviewsAbstractWidth/numSubviews);
-                        subviewX = (itemFrame.size.width) - (totalSubviewsOffset + ((i+1)*subviewHeight) + ((i)*[itemSquare spacing]));
+                        subviewX = (itemFrame.size.width) - (totalSubviewsOffset + ((i+1)*subviewWidth) + ((i)*[itemSquare spacing]));
                         subviewY = totalSubviewsOffset;
                     } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
                         subviewHeight = (totalSubviewsAbstractWidth/numSubviews);
@@ -151,7 +151,7 @@ static NSString * const SubviewLayoutVertical = @"vertical";
                         subviewHeight = (totalSubviewsAbstractHeight/numSubviews);
                         subviewWidth = totalSubviewsAbstractWidth;
                         subviewX = totalSubviewsOffset;
-                        subviewY = (itemFrame.size.height) - (totalSubviewsOffset + ((i+1)*subviewWidth) + ((i)*[itemSquare spacing]));
+                        subviewY = (itemFrame.size.height) - (totalSubviewsOffset + ((i+1)*subviewHeight) + ((i)*[itemSquare spacing]));
                     } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
                         subviewHeight = totalSubviewsAbstractWidth;
                         subviewWidth = (totalSubviewsAbstractHeight/numSubviews);
@@ -211,6 +211,12 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 - (BOOL)shouldAutorotate
 {
     NSLog(@"Should AutoRotate");
+    return YES;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    NSLog(@"Should AutoRotate for ios5");
     return YES;
 }
 
