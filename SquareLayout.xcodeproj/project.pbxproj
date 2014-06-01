@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3A2C3C921935458C00F2C83E /* SquareLayoutJsonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C3C911935458C00F2C83E /* SquareLayoutJsonUtil.m */; };
 		3A3E2C5D1934213E00226024 /* SquareLayoutSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */; };
-		3A6ED05D1936254800A20B75 /* square_hierarchy_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A6ED05C1936254800A20B75 /* square_hierarchy_structure.json */; };
+		3A4A94CF193BB62900E718F1 /* square_hierarchy_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A4A94CE193BB62900E718F1 /* square_hierarchy_structure.json */; };
 		3A6ED0601936351900A20B75 /* DisplayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6ED05F1936351900A20B75 /* DisplayUtil.m */; };
 		3AA452261933FCE900B2A29D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA452251933FCE900B2A29D /* Foundation.framework */; };
 		3AA452281933FCE900B2A29D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA452271933FCE900B2A29D /* CoreGraphics.framework */; };
@@ -41,7 +41,7 @@
 		3A2C3C93193545C400F2C83E /* SquareLayoutJsonUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareLayoutJsonUtil.h; sourceTree = "<group>"; };
 		3A3E2C5B1934213E00226024 /* SquareLayoutSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareLayoutSquare.h; sourceTree = "<group>"; };
 		3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareLayoutSquare.m; sourceTree = "<group>"; };
-		3A6ED05C1936254800A20B75 /* square_hierarchy_structure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = square_hierarchy_structure.json; sourceTree = "<group>"; };
+		3A4A94CE193BB62900E718F1 /* square_hierarchy_structure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = square_hierarchy_structure.json; sourceTree = "<group>"; };
 		3A6ED05E1936351900A20B75 /* DisplayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayUtil.h; sourceTree = "<group>"; };
 		3A6ED05F1936351900A20B75 /* DisplayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayUtil.m; sourceTree = "<group>"; };
 		3AA452221933FCE900B2A29D /* SquareLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SquareLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +121,7 @@
 		3AA4522B1933FCE900B2A29D /* SquareLayout */ = {
 			isa = PBXGroup;
 			children = (
+				3A4A94CE193BB62900E718F1 /* square_hierarchy_structure.json */,
 				3A2C3C93193545C400F2C83E /* SquareLayoutJsonUtil.h */,
 				3A2C3C911935458C00F2C83E /* SquareLayoutJsonUtil.m */,
 				3AA452341933FCE900B2A29D /* SquareLayoutAppDelegate.h */,
@@ -131,7 +132,6 @@
 				3AA452551933FD5500B2A29D /* SquareLayoutViewController.m */,
 				3A3E2C5B1934213E00226024 /* SquareLayoutSquare.h */,
 				3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */,
-				3A6ED05C1936254800A20B75 /* square_hierarchy_structure.json */,
 				3A6ED05E1936351900A20B75 /* DisplayUtil.h */,
 				3A6ED05F1936351900A20B75 /* DisplayUtil.m */,
 			);
@@ -245,7 +245,7 @@
 			files = (
 				3AA452301933FCE900B2A29D /* InfoPlist.strings in Resources */,
 				3AA452381933FCE900B2A29D /* Images.xcassets in Resources */,
-				3A6ED05D1936254800A20B75 /* square_hierarchy_structure.json in Resources */,
+				3A4A94CF193BB62900E718F1 /* square_hierarchy_structure.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

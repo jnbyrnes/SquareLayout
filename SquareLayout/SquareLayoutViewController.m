@@ -90,64 +90,87 @@ static NSString * const SubviewLayoutVertical = @"vertical";
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         // build child views
         int numSubviews = [[itemSquare subviews] count];
-        float totalSubviewsWidth = 0;
-        float totalSubviewsOriginX = [itemSquare padding] + [itemSquare borderThickness];
-        float totalSubviewsHeight = 0;
-        float totalSubviewsOriginY = [itemSquare padding] + [itemSquare borderThickness];
+        float totalSubviewsOffset = [itemSquare padding] + [itemSquare borderThickness];
+        float totalSubviewsAbstractWidth;
+        float totalSubviewsAbstractHeight;
         if (numSubviews > 0) {
             // Determine horizontal or vertical subview layout
             if ([SubviewLayoutHorizontal isEqualToString:[itemSquare subviewLayout]]) {
-                if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
-                    totalSubviewsWidth = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
-                    totalSubviewsHeight = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
-                } else if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-                    totalSubviewsWidth = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
-                    totalSubviewsHeight = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
+                if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+                    totalSubviewsAbstractWidth = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
+                    totalSubviewsAbstractHeight = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
+                } else {
+                    // default to portrait
+                    totalSubviewsAbstractWidth = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
+                    totalSubviewsAbstractHeight = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
                 }
             } else {
-                if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
-                    totalSubviewsWidth = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
-                    totalSubviewsHeight = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
-                } else if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-                    totalSubviewsWidth = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
-                    totalSubviewsHeight = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
+                if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+                    totalSubviewsAbstractWidth = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
+                    totalSubviewsAbstractHeight = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
+                } else {
+                    // default to portrait
+                    totalSubviewsAbstractWidth = itemFrame.size.width - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2);
+                    totalSubviewsAbstractHeight = itemFrame.size.height - ([itemSquare borderThickness]*2) - ([itemSquare padding]*2) - ((numSubviews-1)*[itemSquare spacing]);
                 }
             }
             // Loop through subviews creating the view
             for (int i = 0; i < numSubviews; i++) {
                 SquareLayoutSquare *subviewSquare = [[itemSquare subviews] objectAtIndex:i];
-                float subviewWidth = totalSubviewsWidth;
-                float subviewX = totalSubviewsOriginX;
-                float subviewHeight = totalSubviewsHeight;
-                float subviewY = totalSubviewsOriginY;
+                float subviewWidth;
+                float subviewX;
+                float subviewHeight;
+                float subviewY;
                 // Determine horizontal or vertical subview layout
                 if ([SubviewLayoutHorizontal isEqualToString:[itemSquare subviewLayout]]) {
-                    subviewX = subviewX + (i*totalSubviewsWidth/numSubviews);
-                    if (i > 0) {
-                        subviewX = subviewX + ((i)*[itemSquare spacing]);
-                    }
-                    subviewWidth = (totalSubviewsWidth/numSubviews);
-                    if (orientation == UIInterfaceOrientationLandscapeLeft) {
-                        subviewX = totalSubviewsHeight - ((i)*subviewWidth) - ((i-1)*[itemSquare spacing]);
+                    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+                        subviewHeight = totalSubviewsAbstractHeight;
+                        subviewWidth = (totalSubviewsAbstractWidth/numSubviews);
+                        subviewX = (itemFrame.size.width) - (totalSubviewsOffset + ((i+1)*subviewHeight) + ((i)*[itemSquare spacing]));
+                        subviewY = totalSubviewsOffset;
+                    } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+                        subviewHeight = (totalSubviewsAbstractWidth/numSubviews);
+                        subviewWidth = totalSubviewsAbstractHeight;
+                        subviewX = totalSubviewsOffset;
+                        subviewY = (itemFrame.size.height) - (totalSubviewsOffset + ((i+1)*subviewHeight) + ((i)*[itemSquare spacing]));
+                    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+                        subviewHeight = (totalSubviewsAbstractWidth/numSubviews);
+                        subviewWidth = totalSubviewsAbstractHeight;
+                        subviewX = totalSubviewsOffset;
+                        subviewY = totalSubviewsOffset + (i*subviewHeight) + ((i)*[itemSquare spacing]);
+                    } else {
+                        // default to portrait
+                        subviewHeight = totalSubviewsAbstractHeight;
+                        subviewWidth = (totalSubviewsAbstractWidth/numSubviews);
+                        subviewX = totalSubviewsOffset + (i*subviewWidth) + ((i)*[itemSquare spacing]);
+                        subviewY = totalSubviewsOffset;
                     }
                 } else {
-                    subviewY = subviewY + (i*totalSubviewsHeight/numSubviews);
-                    if (i > 0) {
-                        subviewY = subviewY + ((i)*[itemSquare spacing]);
+                    subviewHeight = (totalSubviewsAbstractHeight/numSubviews);
+                    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+                        subviewHeight = (totalSubviewsAbstractHeight/numSubviews);
+                        subviewWidth = totalSubviewsAbstractWidth;
+                        subviewX = totalSubviewsOffset;
+                        subviewY = (itemFrame.size.height) - (totalSubviewsOffset + ((i+1)*subviewWidth) + ((i)*[itemSquare spacing]));
+                    } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+                        subviewHeight = totalSubviewsAbstractWidth;
+                        subviewWidth = (totalSubviewsAbstractHeight/numSubviews);
+                        subviewX = totalSubviewsOffset + (i*subviewWidth) + ((i)*[itemSquare spacing]);
+                        subviewY = totalSubviewsOffset;
+                    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+                        subviewHeight = totalSubviewsAbstractWidth;
+                        subviewWidth = (totalSubviewsAbstractHeight/numSubviews);
+                        subviewX = (itemFrame.size.width) - (totalSubviewsOffset + ((i+1)*subviewWidth) + ((i)*[itemSquare spacing]));
+                        subviewY = totalSubviewsOffset;
+                    } else {
+                        // default to portrait
+                        subviewHeight = (totalSubviewsAbstractHeight/numSubviews);
+                        subviewWidth = totalSubviewsAbstractWidth;
+                        subviewX = totalSubviewsOffset;
+                        subviewY = totalSubviewsOffset + (i*subviewHeight) + ((i)*[itemSquare spacing]);
                     }
-                    if (orientation == UIInterfaceOrientationLandscapeRight) {
-                        subviewY = totalSubviewsHeight - subviewY - ((numSubviews+1)*[itemSquare spacing]);
-                    }
-                    subviewHeight = (totalSubviewsHeight/numSubviews);
                 }
-                if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
-                    NSLog(@"------------Orientation is in Portrait");
-                    [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewX, subviewY, subviewWidth, subviewHeight)];
-                } else if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-                    NSLog(@"------------Orientation is in Landscape");
-                    [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewY, subviewX, subviewHeight, subviewWidth)];
-                }
-
+                [self buildViewHierarchy:subviewSquare view:parentView frame:CGRectMake(subviewX, subviewY, subviewWidth, subviewHeight)];
             }
         }
         
