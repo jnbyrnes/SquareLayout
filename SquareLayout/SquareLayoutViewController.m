@@ -23,7 +23,6 @@ static NSString * const SubviewLayoutVertical = @"vertical";
     self = [super init];
     if (self) {
         // custom initialization
-        NSLog(@"Initializing SquareLayoutViewController");
         mainWindow = [[UIView alloc] initWithFrame:[[[UIApplication sharedApplication] keyWindow] bounds]];
         [mainWindow setBackgroundColor:[UIColor clearColor]];
         [[[UIApplication sharedApplication] keyWindow] addSubview:mainWindow];
@@ -46,7 +45,6 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 
 - (void)loadData
 {
-    NSLog(@"Load Data is called");
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(concurrentQueue, ^{
         
@@ -81,8 +79,8 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 
 - (void)buildViewHierarchy:(SquareLayoutSquare *)itemSquare view:(UIView *)itemView frame:(CGRect)itemFrame
 {
-    NSLog(@"Build View Hierarchy is called");
     if (itemSquare && itemView) {
+        NSLog(@"Processing Square Id: %d", [itemSquare squareId]);
         // build parent view
         UIView *parentView = [self buildSquareView:itemSquare frame:itemFrame];
         [itemView addSubview:parentView];
@@ -179,7 +177,6 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 
 - (UIView *)buildSquareView:(SquareLayoutSquare *)itemSquare frame:(CGRect)itemFrame
 {
-    NSLog(@"Build Square View is called");
     UIView *view = [[UIView alloc] initWithFrame:itemFrame];
     [view setBackgroundColor:[itemSquare backgroundColor]];
     [[view layer] setBorderColor:[[itemSquare borderColor] CGColor]];
@@ -190,7 +187,6 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 // Handle Rotation
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSLog(@"Did Rotate From Interface Orientation");
     // Remove All subviews
     [[mainWindow subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     // Perform Reload View
@@ -199,24 +195,20 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    NSLog(@"Will Rotate To Interface Orientation");
 }
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    NSLog(@"Supported Interface Orientations");
     return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate
 {
-    NSLog(@"Should AutoRotate");
     return YES;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    NSLog(@"Should AutoRotate for ios5");
     return YES;
 }
 

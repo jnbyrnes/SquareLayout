@@ -17,18 +17,14 @@
     // Check for orientation
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if (orientation == UIInterfaceOrientationPortrait) {
-        NSLog(@"#########UIInterfaceOrientationPortrait");
         rootFrame.origin.y = rootFrame.origin.y + 20;
         rootFrame.size.height = rootFrame.size.height - 20;
     } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
-        NSLog(@"#########UIInterfaceOrientationLandscapeLeft");
         rootFrame.origin.x = rootFrame.origin.x + 20;
         rootFrame.size.width = rootFrame.size.width - 20;
     } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-        NSLog(@"#########UIInterfaceOrientationLandscapeRight");
         rootFrame.size.width = rootFrame.size.width - 20;
     } else {
-        NSLog(@"#########UIInterfaceOrientationPortraitUpsideDown");
         rootFrame.size.height = rootFrame.size.height - 20;
     }
     return rootFrame;

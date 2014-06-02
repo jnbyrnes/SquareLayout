@@ -30,7 +30,6 @@ static NSString * const SubviewsKey = @"subviews";
 
 + (SquareLayoutSquare *)getParentSquare:(NSData *)jsonData
 {
-    NSLog(@"Get Parent Square is called");
     NSError *parsingError;
     NSDictionary *d = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parsingError];
     // Get root-view dictionary
@@ -44,7 +43,6 @@ static NSString * const SubviewsKey = @"subviews";
 
 + (SquareLayoutSquare *)buildSquare:(NSDictionary *)jsonDictionary root:(BOOL)itemRoot
 {
-    NSLog(@"Build Square is called");
     int padding = PaddingDefault;
     if ([jsonDictionary objectForKey:PaddingKey]) {
         padding = [[jsonDictionary objectForKey:PaddingKey] intValue];
@@ -77,7 +75,6 @@ static NSString * const SubviewsKey = @"subviews";
 
 + (UIColor *)buildColor:(NSDictionary *)jsonDictionary defaultColor:(UIColor *)defaultColor
 {
-    NSLog(@"Build Color is called");
     UIColor *resultColor = defaultColor;
     if (jsonDictionary) {
         if ([jsonDictionary objectForKey:RedColorKey] && [jsonDictionary objectForKey:GreenColorKey] && [jsonDictionary objectForKey:BlueColorKey]) {
