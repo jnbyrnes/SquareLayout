@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A2C3C921935458C00F2C83E /* SquareLayoutJsonUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C3C911935458C00F2C83E /* SquareLayoutJsonUtil.m */; };
+		3A2F0E161961DDC400A3520E /* SquareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2F0E151961DDC400A3520E /* SquareView.m */; };
 		3A3E2C5D1934213E00226024 /* SquareLayoutSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */; };
 		3A4A94CF193BB62900E718F1 /* square_hierarchy_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A4A94CE193BB62900E718F1 /* square_hierarchy_structure.json */; };
 		3A6ED0601936351900A20B75 /* DisplayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6ED05F1936351900A20B75 /* DisplayUtil.m */; };
@@ -39,6 +40,8 @@
 /* Begin PBXFileReference section */
 		3A2C3C911935458C00F2C83E /* SquareLayoutJsonUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SquareLayoutJsonUtil.m; sourceTree = "<group>"; };
 		3A2C3C93193545C400F2C83E /* SquareLayoutJsonUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareLayoutJsonUtil.h; sourceTree = "<group>"; };
+		3A2F0E141961DDC400A3520E /* SquareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareView.h; sourceTree = "<group>"; };
+		3A2F0E151961DDC400A3520E /* SquareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareView.m; sourceTree = "<group>"; };
 		3A3E2C5B1934213E00226024 /* SquareLayoutSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareLayoutSquare.h; sourceTree = "<group>"; };
 		3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareLayoutSquare.m; sourceTree = "<group>"; };
 		3A4A94CE193BB62900E718F1 /* square_hierarchy_structure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = square_hierarchy_structure.json; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				3A3E2C5C1934213E00226024 /* SquareLayoutSquare.m */,
 				3A6ED05E1936351900A20B75 /* DisplayUtil.h */,
 				3A6ED05F1936351900A20B75 /* DisplayUtil.m */,
+				3A2F0E141961DDC400A3520E /* SquareView.h */,
+				3A2F0E151961DDC400A3520E /* SquareView.m */,
 			);
 			path = SquareLayout;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A2F0E161961DDC400A3520E /* SquareView.m in Sources */,
 				3A2C3C921935458C00F2C83E /* SquareLayoutJsonUtil.m in Sources */,
 				3AA452561933FD5500B2A29D /* SquareLayoutViewController.m in Sources */,
 				3AA452321933FCE900B2A29D /* main.m in Sources */,

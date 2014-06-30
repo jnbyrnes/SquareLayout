@@ -13,7 +13,6 @@
 @interface SquareLayoutViewController : UIViewController
 {
     SquareLayoutSquare *rootSquare;
-    UIView *mainWindow;
 }
 
 @end
