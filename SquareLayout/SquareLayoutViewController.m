@@ -161,6 +161,37 @@ static NSString * const SubviewLayoutVertical = @"vertical";
     }
 }
 
+- (void)addChildrenSquares:(int)squareId
+{
+    if (rootSquare) {
+        if ([rootSquare squareId]==squareId) {
+            rootSquare = nil;
+        } else {
+            [self processAddChildSquares:squareId withCurrentSquare:rootSquare];
+            [self redrawSquareViews];
+        }
+    }
+}
+
+- (void)processAddChildSquares:(int)squareId withCurrentSquare:(SquareLayoutSquare *)currentSquare
+{
+    NSMutableArray *subViewArray = [currentSquare subviews];
+    if (subViewArray && [subViewArray count]>0) {
+        for (SquareLayoutSquare *childSquare in subViewArray) {
+            if ([childSquare squareId]==squareId) {
+                //pick random number
+                NSInteger randomNumber = arc4random() % 3;
+                for (int i=0; i<=randomNumber; i++) {
+                    [[childSquare subviews] addObject:[SquareLayoutJsonUtil buildRandomSquare]];
+                }
+                return;
+            } else {
+                [self processAddChildSquares:squareId withCurrentSquare:childSquare];
+            }
+        }
+    }
+}
+
 - (void)redrawSquareViews
 {
     // Remove All subviews

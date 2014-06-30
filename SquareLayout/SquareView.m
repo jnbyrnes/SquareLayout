@@ -28,6 +28,8 @@
         UISwipeGestureRecognizer *downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeDown:)];
         [downSwipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionDown];
         [self addGestureRecognizer:downSwipeGestureRecognizer];
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+        [self addGestureRecognizer:tapGestureRecognizer];
     }
     return self;
 }
@@ -78,6 +80,14 @@
     UIView *currentView = [gr view];
     if (currentView) {
         [delegate removeSquare:[square squareId]];
+    }
+}
+
+- (void)didTap:(UITapGestureRecognizer *)gr
+{
+    UIView *currentView = [gr view];
+    if (currentView) {
+        [delegate addChildrenSquares:[square squareId]];
     }
 }
 

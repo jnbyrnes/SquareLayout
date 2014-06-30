@@ -16,5 +16,6 @@
 }
 
 + (SquareLayoutSquare *)getParentSquare:(NSData *)jsonData;
++ (SquareLayoutSquare *)buildRandomSquare;
 
 @end

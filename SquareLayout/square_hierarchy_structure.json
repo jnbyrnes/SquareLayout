@@ -19,34 +19,34 @@
                      "padding": 10,
                      "spacing": 10,
                      "background-color": {
-                     "red": 0.0,
-                     "green": 1.0,
-                     "blue": 0.0
+                         "red": 0.0,
+                         "green": 1.0,
+                         "blue": 0.0
                      },
                      "subview-layout": "horizontal",
                      "subviews": [
                                   {
                                   "border-thickness": 1.0,
                                   "background-color": {
-                                  "red": 1.0,
-                                  "green": 0.0,
-                                  "blue": 0.0
+                                      "red": 1.0,
+                                      "green": 0.0,
+                                      "blue": 0.0
                                   }
                                   },
                                   {
                                   "border-thickness": 1.0,
                                   "background-color": {
-                                  "red": 1.0,
-                                  "green": 0.0,
-                                  "blue": 0.0
+                                      "red": 1.0,
+                                      "green": 0.0,
+                                      "blue": 0.0
                                   }
                                   },
                                   {
                                   "border-thickness": 1.0,
                                   "background-color": {
-                                  "red": 1.0,
-                                  "green": 0.0,
-                                  "blue": 0.0
+                                      "red": 1.0,
+                                      "green": 0.0,
+                                      "blue": 0.0
                                   }
                                   }
                                   ]
@@ -55,31 +55,32 @@
                      "padding": 10,
                      "spacing": 10,
                      "background-color": {
-                     "red": 0.0,
-                     "green": 0.0,
-                     "blue": 1.0
+                         "red": 0.0,
+                         "green": 0.0,
+                         "blue": 1.0
                      },
                      "subview-layout": "horizontal",
                      "subviews": [
                                   {
                                   "background-color": {
-                                  "red": 1.0,
-                                  "green": 1.0,
-                                  "blue": 1.0
+                                      "red": 1.0,
+                                      "green": 1.0,
+                                      "blue": 1.0
+                                  }
+                                  },
+                                  {
+                                  "border-thickness": 1.0,
+                                  "background-color": {
+                                      "red": 1.0,
+                                      "green": 1.0,
+                                      "blue": 1.0
                                   }
                                   },
                                   {
                                   "background-color": {
-                                  "red": 1.0,
-                                  "green": 1.0,
-                                  "blue": 1.0
-                                  }
-                                  },
-                                  {
-                                  "background-color": {
-                                  "red": 0.0,
-                                  "green": 0.0,
-                                  "blue": 0.0
+                                      "red": 0.0,
+                                      "green": 0.0,
+                                      "blue": 0.0
                                   }
                                   }
                                   ]

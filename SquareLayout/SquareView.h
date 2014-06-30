@@ -11,6 +11,7 @@
 
 @protocol SquareViewDelegate <NSObject>
 - (void)removeSquare:(int)squareId;
+- (void)addChildrenSquares:(int)squareId;
 @end
 
 @interface SquareView : UIView <UIGestureRecognizerDelegate>
