@@ -20,11 +20,11 @@
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, strong) UIColor *backgroundColor;
 @property (nonatomic, strong) NSString *subviewLayout;
-@property (nonatomic, strong) NSArray *subviews;
+@property (nonatomic, strong) NSMutableArray *subviews;
 @property (nonatomic) int squareId;
 
 
-- (id)initWithPadding:(int)itemPadding spacing:(int)itemSpacing borderThickness:(float)itemBorderThickness root:(BOOL)itemRoot borderColor:(UIColor *)itemBorderColor backgroundColor:(UIColor *)itemBackgroundColor subviewLayout:(NSString *)itemSubviewLayout subviews:(NSArray *)itemSubviews;
+- (id)initWithPadding:(int)itemPadding spacing:(int)itemSpacing borderThickness:(float)itemBorderThickness root:(BOOL)itemRoot borderColor:(UIColor *)itemBorderColor backgroundColor:(UIColor *)itemBackgroundColor subviewLayout:(NSString *)itemSubviewLayout subviews:(NSMutableArray *)itemSubviews;
 
 
 @end

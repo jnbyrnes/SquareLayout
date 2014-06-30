@@ -10,6 +10,8 @@
 
 @implementation SquareView
 
+@synthesize square, delegate;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -39,6 +41,14 @@
 }
 */
 
+- (void)customizeView:(SquareLayoutSquare *)itemSquare
+{
+    [self setBackgroundColor:[itemSquare backgroundColor]];
+    [[self layer] setBorderColor:[[itemSquare borderColor] CGColor]];
+    [[self layer] setBorderWidth:[itemSquare borderThickness]];
+    [self setSquare:itemSquare];
+}
+
 - (void)didSwipeRight:(UISwipeGestureRecognizer *)gr
 {
     NSLog(@"Did Swipe Right!!!!");
@@ -67,7 +77,7 @@
 {
     UIView *currentView = [gr view];
     if (currentView) {
-        [currentView removeFromSuperview];
+        [delegate removeSquare:[square squareId]];
     }
 }
 

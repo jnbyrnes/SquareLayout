@@ -126,19 +126,53 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 - (UIView *)buildSquareView:(SquareLayoutSquare *)itemSquare frame:(CGRect)itemFrame
 {
     SquareView *view = [[SquareView alloc] initWithFrame:itemFrame];
+    [view setSquare:itemSquare];
+    [view setDelegate:self];
     [view setBackgroundColor:[itemSquare backgroundColor]];
     [[view layer] setBorderColor:[[itemSquare borderColor] CGColor]];
     [[view layer] setBorderWidth:[itemSquare borderThickness]];
     return view;
 }
 
-// Handle Rotation
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)removeSquare:(int)squareId
+{
+    if (rootSquare) {
+        if ([rootSquare squareId]==squareId) {
+            rootSquare = nil;
+        } else {
+            [self processChildSquareRemoval:squareId withCurrentSquare:rootSquare];
+            [self redrawSquareViews];
+        }
+    }
+}
+
+- (void)processChildSquareRemoval:(int)squareId withCurrentSquare:(SquareLayoutSquare *)currentSquare
+{
+    NSMutableArray *subViewArray = [currentSquare subviews];
+    if (subViewArray && [subViewArray count]>0) {
+        for (SquareLayoutSquare *childSquare in subViewArray) {
+            if ([childSquare squareId]==squareId) {
+                [subViewArray removeObject:childSquare];
+                return;
+            } else {
+                [self processChildSquareRemoval:squareId withCurrentSquare:childSquare];
+            }
+        }
+    }
+}
+
+- (void)redrawSquareViews
 {
     // Remove All subviews
     [[self.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     // Perform Reload View
     [self processRootSquare];
+}
+
+// Handle Rotation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self redrawSquareViews];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

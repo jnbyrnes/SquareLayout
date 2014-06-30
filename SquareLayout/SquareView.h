@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SquareLayoutSquare.h"
+
+@protocol SquareViewDelegate <NSObject>
+- (void)removeSquare:(int)squareId;
+@end
 
 @interface SquareView : UIView <UIGestureRecognizerDelegate>
+{
+    
+}
+
+@property (nonatomic, strong) SquareLayoutSquare *square;
+@property (nonatomic, weak) id <SquareViewDelegate> delegate;
+
+- (void)customizeView:(SquareLayoutSquare *)square;
 
 @end

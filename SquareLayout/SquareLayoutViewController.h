@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SquareView.h"
 
 @class SquareLayoutSquare;
 
-@interface SquareLayoutViewController : UIViewController
+@interface SquareLayoutViewController : UIViewController <SquareViewDelegate>
 {
     SquareLayoutSquare *rootSquare;
 }
