@@ -17,6 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        // Add Swipe Gesture Recognizers
         UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRight:)];
         [self addGestureRecognizer:rightSwipeGestureRecognizer];
         UISwipeGestureRecognizer *leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
@@ -28,8 +29,12 @@
         UISwipeGestureRecognizer *downSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeDown:)];
         [downSwipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionDown];
         [self addGestureRecognizer:downSwipeGestureRecognizer];
+        // Add Tap Gesture Recognizers
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
         [self addGestureRecognizer:tapGestureRecognizer];
+        // Add Long Press Gesture Recognizers
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongPress:)];
+        [self addGestureRecognizer:longPressGestureRecognizer];
     }
     return self;
 }
@@ -77,17 +82,37 @@
 
 - (void)didSwipe:(UISwipeGestureRecognizer *)gr
 {
-    UIView *currentView = [gr view];
-    if (currentView) {
-        [delegate removeSquare:[square squareId]];
-    }
+    [delegate removeSquare:[square squareId]];
 }
 
 - (void)didTap:(UITapGestureRecognizer *)gr
 {
-    UIView *currentView = [gr view];
-    if (currentView) {
-        [delegate addChildrenSquares:[square squareId]];
+    NSLog(@"Did Tap!!!!");
+    [delegate addChildrenSquares:[square squareId]];
+}
+
+- (void)didLongPress:(UILongPressGestureRecognizer *)gr
+{
+    NSLog(@"Did Long Press!!!!");
+    NSLog(@"%d", gr.state);
+    if (gr.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"UIGestureRecognizerStateEnded");
+        CGPoint location = [gr locationInView:[gr view]];
+        [delegate moveSquare:[square squareId] withEndingPoint:location];
+    } else if (gr.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"UIGestureRecognizerStateBegan");
+        UIView *currentView = [gr view];
+        [currentView removeFromSuperview];
+    } else if (gr.state == UIGestureRecognizerStateRecognized) {
+        NSLog(@"UIGestureRecognizerStateRecognized");
+    } else if (gr.state == UIGestureRecognizerStateFailed) {
+        NSLog(@"UIGestureRecognizerStateFailed");
+    } else if (gr.state == UIGestureRecognizerStateCancelled) {
+        NSLog(@"UIGestureRecognizerStateCancelled");
+        CGPoint location = [gr locationInView:[gr view]];
+        [delegate moveSquare:[square squareId] withEndingPoint:location];
+    } else if (gr.state == UIGestureRecognizerStateChanged) {
+        NSLog(@"UIGestureRecognizerStateChanged");
     }
 }
 

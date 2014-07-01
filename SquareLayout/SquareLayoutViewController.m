@@ -17,6 +17,9 @@ static NSString * const JsonFileType = @"json";
 static NSString * const SubviewLayoutHorizontal = @"horizontal";
 static NSString * const SubviewLayoutVertical = @"vertical";
 
+static NSString * const DictionaryMovedSquareKey = @"moved";
+static NSString * const DictionaryDestinationSquareKey = @"destination";
+
 @implementation SquareLayoutViewController
 
 - (id)init
@@ -128,6 +131,7 @@ static NSString * const SubviewLayoutVertical = @"vertical";
     SquareView *view = [[SquareView alloc] initWithFrame:itemFrame];
     [view setSquare:itemSquare];
     [view setDelegate:self];
+    [itemSquare setRectangle:itemFrame];
     [view setBackgroundColor:[itemSquare backgroundColor]];
     [[view layer] setBorderColor:[[itemSquare borderColor] CGColor]];
     [[view layer] setBorderWidth:[itemSquare borderThickness]];
@@ -165,7 +169,7 @@ static NSString * const SubviewLayoutVertical = @"vertical";
 {
     if (rootSquare) {
         if ([rootSquare squareId]==squareId) {
-            rootSquare = nil;
+            [self createRandomSquares:rootSquare];
         } else {
             [self processAddChildSquares:squareId withCurrentSquare:rootSquare];
             [self redrawSquareViews];
@@ -179,17 +183,81 @@ static NSString * const SubviewLayoutVertical = @"vertical";
     if (subViewArray && [subViewArray count]>0) {
         for (SquareLayoutSquare *childSquare in subViewArray) {
             if ([childSquare squareId]==squareId) {
-                //pick random number
-                NSInteger randomNumber = arc4random() % 3;
-                for (int i=0; i<=randomNumber; i++) {
-                    [[childSquare subviews] addObject:[SquareLayoutJsonUtil buildRandomSquare]];
-                }
+                [self createRandomSquares:childSquare];
                 return;
             } else {
                 [self processAddChildSquares:squareId withCurrentSquare:childSquare];
             }
         }
     }
+}
+
+- (void)createRandomSquares:(SquareLayoutSquare *)currentSquare
+{
+    //pick random number
+    NSInteger randomNumber = arc4random() % 3;
+    for (int i=0; i<=randomNumber; i++) {
+        [[currentSquare subviews] addObject:[SquareLayoutJsonUtil buildRandomSquare]];
+    }
+}
+
+- (void)moveSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint
+{
+    // Find smallest view that lies in endingPoint
+    if (rootSquare) {
+        if ([rootSquare squareId]==squareId) {
+            // Do nothing, since moving root to root
+        } else {
+            NSMutableDictionary *resultDictionary = [self transferSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint withCurrentSquare:rootSquare];
+            SquareLayoutSquare *removedSquare = [resultDictionary objectForKey:DictionaryMovedSquareKey];
+            SquareLayoutSquare *destinationSquare = [resultDictionary objectForKey:DictionaryDestinationSquareKey];
+            if (removedSquare && destinationSquare) {
+                [[destinationSquare subviews] addObject:removedSquare];
+            }
+            [self redrawSquareViews];
+        }
+    }
+}
+
+- (NSMutableDictionary *)transferSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint withCurrentSquare:(SquareLayoutSquare *)currentSquare
+{
+    // Find moved square by squareId
+    SquareLayoutSquare *removedSquare;
+    // Determine smallest square that point lies inside
+    SquareLayoutSquare *destinationSquare;
+    NSMutableArray *subViewArray = [currentSquare subviews];
+    if (subViewArray && [subViewArray count]>0) {
+        for (SquareLayoutSquare *childSquare in subViewArray) {
+            if ([childSquare squareId]==squareId) {
+                [subViewArray removeObject:childSquare];
+                removedSquare = childSquare;
+            } else {
+                if (CGRectContainsPoint([childSquare rectangle],endingPoint)) {
+                    destinationSquare = childSquare;
+                }
+                NSMutableDictionary *tempDictionary = [self transferSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint withCurrentSquare:childSquare];
+                SquareLayoutSquare *tempRemovedSquare = [tempDictionary objectForKey:DictionaryMovedSquareKey];
+                SquareLayoutSquare *tempDestinationSquare = [tempDictionary objectForKey:DictionaryDestinationSquareKey];
+                if (!removedSquare && tempRemovedSquare) {
+                    removedSquare = tempRemovedSquare;
+                }
+                if (tempDestinationSquare) {
+                    if (!destinationSquare) {
+                        destinationSquare = tempDestinationSquare;
+                    } else {
+                        if (destinationSquare.rectangle.size.width>tempDestinationSquare.rectangle.size.width) {
+                            destinationSquare = tempDestinationSquare;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Move Square
+    NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
+    [resultDictionary setObject:removedSquare forKey:DictionaryMovedSquareKey];
+    [resultDictionary setObject:destinationSquare forKey:DictionaryDestinationSquareKey];
+    return resultDictionary;
 }
 
 - (void)redrawSquareViews
