@@ -23,3 +23,12 @@ This app reads and parses the "square_hierarchy_structure.json" file and builds 
 	* Added unique identifier to square to allow for addition and removal of squares as a result of gesturerecognizers that would react to user interaction. Unique id is necessary to find the view that expeiences the tap and map to specific square, which then could be deleted or have subviews added to the object
 * Unit Tests
 	* Did not add unit tests as part of this project, but unit tests could be added to validate that a created square matches the json requirements, that the number of squares match, that the square has proper subview squares, etc.
+
+----------------
+
+### Tasks Undertaken
+
+* Base Case
+* Swiping to delete view and children
+* Tapping on any view to randomly insert 1-3 children
+* Long-pressing to be able to move view to different location in object hierarchy

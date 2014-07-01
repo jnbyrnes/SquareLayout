@@ -94,23 +94,18 @@
 - (void)didLongPress:(UILongPressGestureRecognizer *)gr
 {
     NSLog(@"Did Long Press!!!!");
-    NSLog(@"%d", gr.state);
     if (gr.state == UIGestureRecognizerStateEnded) {
         NSLog(@"UIGestureRecognizerStateEnded");
         CGPoint location = [gr locationInView:[gr view]];
         [delegate moveSquare:[square squareId] withEndingPoint:location];
     } else if (gr.state == UIGestureRecognizerStateBegan) {
         NSLog(@"UIGestureRecognizerStateBegan");
-        UIView *currentView = [gr view];
-        [currentView removeFromSuperview];
     } else if (gr.state == UIGestureRecognizerStateRecognized) {
         NSLog(@"UIGestureRecognizerStateRecognized");
     } else if (gr.state == UIGestureRecognizerStateFailed) {
         NSLog(@"UIGestureRecognizerStateFailed");
     } else if (gr.state == UIGestureRecognizerStateCancelled) {
         NSLog(@"UIGestureRecognizerStateCancelled");
-        CGPoint location = [gr locationInView:[gr view]];
-        [delegate moveSquare:[square squareId] withEndingPoint:location];
     } else if (gr.state == UIGestureRecognizerStateChanged) {
         NSLog(@"UIGestureRecognizerStateChanged");
     }

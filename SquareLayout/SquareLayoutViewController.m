@@ -18,6 +18,7 @@ static NSString * const SubviewLayoutHorizontal = @"horizontal";
 static NSString * const SubviewLayoutVertical = @"vertical";
 
 static NSString * const DictionaryMovedSquareKey = @"moved";
+static NSString * const DictionaryParentSquareKey = @"parent";
 static NSString * const DictionaryDestinationSquareKey = @"destination";
 
 @implementation SquareLayoutViewController
@@ -211,7 +212,9 @@ static NSString * const DictionaryDestinationSquareKey = @"destination";
             NSMutableDictionary *resultDictionary = [self transferSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint withCurrentSquare:rootSquare];
             SquareLayoutSquare *removedSquare = [resultDictionary objectForKey:DictionaryMovedSquareKey];
             SquareLayoutSquare *destinationSquare = [resultDictionary objectForKey:DictionaryDestinationSquareKey];
-            if (removedSquare && destinationSquare) {
+            SquareLayoutSquare *parentSquare = [resultDictionary objectForKey:DictionaryParentSquareKey];
+            if (removedSquare && destinationSquare && parentSquare) {
+                [[parentSquare subviews] removeObject:removedSquare];
                 [[destinationSquare subviews] addObject:removedSquare];
             }
             [self redrawSquareViews];
@@ -223,23 +226,29 @@ static NSString * const DictionaryDestinationSquareKey = @"destination";
 {
     // Find moved square by squareId
     SquareLayoutSquare *removedSquare;
+    // Find parent of moved square
+    SquareLayoutSquare *parentSquare;
     // Determine smallest square that point lies inside
     SquareLayoutSquare *destinationSquare;
     NSMutableArray *subViewArray = [currentSquare subviews];
     if (subViewArray && [subViewArray count]>0) {
         for (SquareLayoutSquare *childSquare in subViewArray) {
             if ([childSquare squareId]==squareId) {
-                [subViewArray removeObject:childSquare];
                 removedSquare = childSquare;
+                parentSquare = currentSquare;
             } else {
                 if (CGRectContainsPoint([childSquare rectangle],endingPoint)) {
                     destinationSquare = childSquare;
                 }
                 NSMutableDictionary *tempDictionary = [self transferSquare:(int)squareId withEndingPoint:(CGPoint)endingPoint withCurrentSquare:childSquare];
                 SquareLayoutSquare *tempRemovedSquare = [tempDictionary objectForKey:DictionaryMovedSquareKey];
+                SquareLayoutSquare *tempParentSquare = [tempDictionary objectForKey:DictionaryParentSquareKey];
                 SquareLayoutSquare *tempDestinationSquare = [tempDictionary objectForKey:DictionaryDestinationSquareKey];
                 if (!removedSquare && tempRemovedSquare) {
                     removedSquare = tempRemovedSquare;
+                }
+                if (!parentSquare && tempParentSquare) {
+                    parentSquare = tempParentSquare;
                 }
                 if (tempDestinationSquare) {
                     if (!destinationSquare) {
@@ -255,8 +264,15 @@ static NSString * const DictionaryDestinationSquareKey = @"destination";
     }
     // Move Square
     NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
-    [resultDictionary setObject:removedSquare forKey:DictionaryMovedSquareKey];
-    [resultDictionary setObject:destinationSquare forKey:DictionaryDestinationSquareKey];
+    if (removedSquare) {
+        [resultDictionary setObject:removedSquare forKey:DictionaryMovedSquareKey];
+    }
+    if (parentSquare) {
+        [resultDictionary setObject:parentSquare forKey:DictionaryParentSquareKey];
+    }
+    if (destinationSquare) {
+        [resultDictionary setObject:destinationSquare forKey:DictionaryDestinationSquareKey];
+    }
     return resultDictionary;
 }
 
